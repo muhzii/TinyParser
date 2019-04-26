@@ -1,0 +1,44 @@
+.menu-bar {
+    -fx-font-size: 12px;
+}
+
+.menu-bar, .context-menu {
+    -fx-background-color: #3C4043;
+}
+
+.context-menu {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
+}
+
+.menu-item .label, .menu .label, #codeTextArea {
+    -fx-text-fill: #E6E6E6;
+}
+
+.separator {
+    -fx-opacity: 0.3;
+}
+
+#scrollPane {
+    -fx-border-style: solid centered;
+}
+
+#drawingPane .label {
+    -fx-text-fill: #e53f30;
+}
+
+.split-pane .split-pane-divider {
+    -fx-padding: 0 2 0 2;
+}
+
+#codeTextArea, #codeTextArea .content {
+    -fx-background-color: #272729;
+    -fx-border-color: #E0E0E2;
+}
+
+#codeTextArea, #codeTextArea:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
+
+.aboutDialog .label {
+    -fx-text-fill: #7F0C0B;
+}

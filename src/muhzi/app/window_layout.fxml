@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import muhzi.app.DrawingPane?>
+
+<BorderPane minHeight="500"
+            minWidth="650"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="muhzi.app.Controller">
+    <top>
+        <MenuBar>
+            <Menu text="_File">
+                <MenuItem text="Open..."
+                          onAction="#handleOpen">
+                </MenuItem>
+
+                <SeparatorMenuItem>
+                </SeparatorMenuItem>
+
+                <MenuItem text="Exit"
+                          onAction="#handleExit">
+                </MenuItem>
+            </Menu>
+
+            <Menu text="Run">
+                <MenuItem text="Parse..."
+                          mnemonicParsing="false"
+                          accelerator="Ctrl+P"
+                          onAction="#handleParse">
+                </MenuItem>
+            </Menu>
+
+            <Menu text="Help">
+                <MenuItem fx:id="aboutBtn"
+                          text="About..."
+                          onAction="#handleAbout">
+                </MenuItem>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.65"
+                   orientation="VERTICAL">
+            <ScrollPane fx:id="scrollPane">
+                <DrawingPane fx:id="drawingPane"
+                             prefHeight="${scrollPane.height}"
+                             prefWidth="${scrollPane.width}">
+                    <Label fx:id="drawingPaneLabel"
+                           text=" - Syntax tree ...">
+                    </Label>
+                </DrawingPane>
+            </ScrollPane>
+
+            <TextArea fx:id="codeTextArea"
+                      promptText="Type code here...">
+            </TextArea>
+        </SplitPane>
+    </center>
+</BorderPane>
