@@ -16,17 +16,17 @@ class Scanner {
         DONE
     }
 
-    private static HashMap<String, String> reservedSymbols = new HashMap<>();
+    private static HashMap<String, String> specialSymbols = new HashMap<>();
     static {
-        reservedSymbols.put("+", "Addition operator");
-        reservedSymbols.put("-", "Subtraction operator");
-        reservedSymbols.put("*", "Multiplication operator");
-        reservedSymbols.put("/", "Division operator");
-        reservedSymbols.put("=", "Equality operator");
-        reservedSymbols.put("<", "Comparison operator");
-        reservedSymbols.put("(", "Left bracket");
-        reservedSymbols.put(")", "Right bracket");
-        reservedSymbols.put(";", "Semicolon");
+        specialSymbols.put("+", "Addition operator");
+        specialSymbols.put("-", "Subtraction operator");
+        specialSymbols.put("*", "Multiplication operator");
+        specialSymbols.put("/", "Division operator");
+        specialSymbols.put("=", "Equality operator");
+        specialSymbols.put("<", "Comparison operator");
+        specialSymbols.put("(", "Left bracket");
+        specialSymbols.put(")", "Right bracket");
+        specialSymbols.put(";", "Semicolon");
     }
 
     private static String[] reservedKeywords = {
@@ -60,22 +60,23 @@ class Scanner {
     }
 
     private boolean determineGeneric(int x) {
-        if (determineDigit(x))
+        if (determineDigit(x)) {
             state = STATE.IS_NUM;
-        else if (determineAlpha(x))
+        } else if (determineAlpha(x)) {
             state = STATE.IS_IDENTIFIER;
-        else if (x == ':')
+        } else if (x == ':') {
             state = STATE.IS_ASSIGN;
-        else if (x == '{')
+        } else if (x == '{') {
             state = STATE.IS_COMMENT;
-        else if (reservedSymbols.get(Character.toString((char)x)) != null)
+        } else if (specialSymbols.get(Character.toString((char)x)) != null) {
             state = STATE.DONE;
-        else
+        } else {
             return false;
+        }
         return true;
     }
 
-    private boolean checkReservedKeyword(Token s){
+    private boolean determineReservedKeyword(Token s){
         for (String i : reservedKeywords){
             if (s.getValue().equals(i))
                 return true;
@@ -83,25 +84,17 @@ class Scanner {
         return false;
     }
 
-    private void checkTokenType(Token s){
+    private void evaluateTokenType(Token s){
         if (s.getType().equals("")) {
-            String symbolType = reservedSymbols.get(s.getValue());
+            String symbolType = specialSymbols.get(s.getValue());
 
-            if (symbolType != null)
+            if (symbolType != null) {
                 s.setType(symbolType);
-            else if (checkReservedKeyword(s))
+            } else if (determineReservedKeyword(s)) {
                 s.setType("Reserved keyword");
-            else
+            } else {
                 s.setType("identifier");
-        }
-    }
-
-    private void appendToToken(Token tk, int val, boolean doAppend) throws IOException {
-        if (doAppend){
-            String s = tk.getValue();
-            tk.setValue(s + (char) val);
-        } else {
-            br.reset();
+            }
         }
     }
 
@@ -151,10 +144,15 @@ class Scanner {
                     return getNextToken();
             }
 
-            appendToToken(currentToken, x, append);
+            if (append){
+                String s = currentToken.getValue();
+                currentToken.setValue(s + (char) x);
+            } else {
+                br.reset();
+            }
         } while (state != STATE.DONE);
 
-        checkTokenType(currentToken);
+        evaluateTokenType(currentToken);
         return currentToken;
     }
 }

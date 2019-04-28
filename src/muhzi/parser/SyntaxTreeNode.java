@@ -13,12 +13,12 @@ public class SyntaxTreeNode {
     private String value;
 
     SyntaxTreeNode(String label) {
+        this.label = label;
         next = null;
         children = new SyntaxTreeNode[3];
         parent = null;
-        this.label = label;
-        this.expression = false;
-        this.value = null;
+        expression = false;
+        value = null;
         numOfChildren = 0;
     }
 

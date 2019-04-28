@@ -58,7 +58,7 @@ public class Controller {
             drawingPane.drawTree(syntaxTree, 0.1*scrollPane.getWidth(), 0.1*scrollPane.getHeight());
         } catch (ParserError | SyntaxError | TokenError e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Exception Dialogue");
+            alert.setTitle("Exception Dialog");
             alert.setHeaderText("Error occurred while parsing the code...");
             alert.setContentText(e.getMessage());
             alert.showAndWait();

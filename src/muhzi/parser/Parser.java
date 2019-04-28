@@ -37,7 +37,7 @@ public class Parser {
         try {
             FileHandler fh =
                     new FileHandler(System.getProperty("user.dir") +
-                                    File.separator +"parser_output.txt");
+                                    File.separator + "parser_output.txt");
             fh.setFormatter(new Formatter() {
                 private static final String format = "[%1$tF %1$tT] [%2$s] %3$s %n";
 
@@ -61,17 +61,16 @@ public class Parser {
     private SyntaxTreeNode tree;
 
     public SyntaxTreeNode parse(BufferedReader br) {
+        SyntaxTreeNode root = tree = new SyntaxTreeNode("NIL");
         scanner = new Scanner(br);
         try {
             currentToken = scanner.getNextToken();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new ParserError();
         }
 
-        SyntaxTreeNode root = tree = new SyntaxTreeNode("NIL");
-
         matchProgram();
-
         SyntaxTreeNode.removeNilNodes(root);
         return root;
     }
@@ -110,7 +109,6 @@ public class Parser {
 
         String tk_val = currentToken.getValue();
         String tk_type = currentToken.getType();
-
         if (tk_val.equals("if")) {
             matchIfStmt();
         } else if (tk_val.equals("repeat")) {
@@ -196,7 +194,6 @@ public class Parser {
 
         if (currentToken.getValue().equals("else")) {
             match("else");
-
             advanceToAChild(currentNode);
             matchStmtSequence(false);
         }
@@ -215,7 +212,6 @@ public class Parser {
         String tk_val = currentToken.getValue();
         if (tk_val.equals("<") || tk_val.equals("=")){
             matchOp(currentNode);
-
             advanceToAChild(tree);
             matchSimpleExp();
         }
@@ -231,7 +227,6 @@ public class Parser {
         while (currentToken.getValue().equals("+") ||
                 currentToken.getValue().equals("-")) {
             matchOp(currentNode);
-
             advanceToAChild(tree);
             matchTerm();
         }
@@ -279,7 +274,6 @@ public class Parser {
         while(currentToken.getValue().equals("*") ||
                 currentToken.getValue().equals("/")) {
             matchOp(currentNode);
-
             advanceToAChild(tree);
             matchFactor();
         }
