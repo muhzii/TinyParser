@@ -48,7 +48,7 @@ public class DrawingPane extends Pane {
             this.getChildren().add(line);
 
             drawTree(child, childX, childY);
-            childX += SyntaxTreeNode.getNodeWidth(child) * (NODE_WIDTH + NODE_GAP);
+            childX += SyntaxTreeNode.getLevelWidth(child) * (NODE_WIDTH + NODE_GAP);
         }
 
         // determine next tree coordinates
@@ -64,7 +64,7 @@ public class DrawingPane extends Pane {
         }
 
         // adjust pane size
-        double boundX = siblingX + SyntaxTreeNode.getNodeWidth(siblingTree) * (NODE_WIDTH + NODE_GAP);
+        double boundX = siblingX + SyntaxTreeNode.getLevelWidth(siblingTree) * (NODE_WIDTH + NODE_GAP);
         adjustBounds(boundX, childY);
     }
 

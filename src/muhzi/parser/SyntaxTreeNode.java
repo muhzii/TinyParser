@@ -117,36 +117,24 @@ public class SyntaxTreeNode {
         removeNilNodes(root.next);
     }
 
-    private static int getNumOfLeafs(SyntaxTreeNode root) {
+    public static int getLevelWidth(SyntaxTreeNode root) {
         if (root == null)
             return 0;
-        if (root.numOfChildren == 0)
-            return 1;
-
-        int numOfLeafs = 0;
-        for (SyntaxTreeNode child: root.children) {
-            numOfLeafs += getNumOfLeafs(child);
-        }
-
-        return numOfLeafs;
-    }
-
-    public static int getNodeWidth(SyntaxTreeNode root) {
-        if (root == null)
-            return 0;
-
-        int numOfChildren = root.numOfChildren;
-        if (numOfChildren == 0)
-            return 1;
 
         int width = 0;
-        for (int i = 0; i < numOfChildren; i++) {
-            SyntaxTreeNode child = root.children[i];
-            width += getNumOfLeafs(child);
-            width += getNodeWidth(child.next);
-        }
-        width += getNodeWidth(root.next);
+        int numOfChildren = root.numOfChildren;
 
-        return width;
+        if (numOfChildren == 0) {
+            if (root.next == null) {
+                return 1;
+            } else {
+                width = 1;
+            }
+        }
+
+        for (int i = 0; i < numOfChildren; i++) {
+            width += getLevelWidth(root.children[i]);
+        }
+        return width + getLevelWidth(root.next);
     }
 }
